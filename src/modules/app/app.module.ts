@@ -1,7 +1,9 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { UsersModule } from '../users/users.module';
 import configuration from 'src/configurations/configuration';
+import { User } from '../users/models/user.model';
 
 @Module({
   imports: [
@@ -41,15 +43,16 @@ import configuration from 'src/configurations/configuration';
         // Passing additional parameters for more correct operation
 
         // Specify an array of models that will use any relationships
-        models: [],
+        models: [User],
 
         // Automatic addition of models to the database
         autoLoadModels: true,
 
-        // Синхронизация сущностей
+        // Entity Synchronization
         synchronize: true,
       }),
     }),
+    UsersModule,
   ],
 })
 export class AppModule {}
