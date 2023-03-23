@@ -4,6 +4,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { UsersModule } from '../users/users.module';
 import configuration from 'src/configurations/configuration';
 import { User } from '../users/models/user.model';
+import { Profile } from '../users/models/profile.model';
 
 @Module({
   imports: [
@@ -43,7 +44,7 @@ import { User } from '../users/models/user.model';
         // Passing additional parameters for more correct operation
 
         // Specify an array of models that will use any relationships
-        models: [User],
+        models: [User, Profile],
 
         // Automatic addition of models to the database
         autoLoadModels: true,
