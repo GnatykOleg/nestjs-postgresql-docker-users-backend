@@ -13,6 +13,7 @@ import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreateUserDTO,
   GetByRoleQueryDTO,
+  IdParam,
   UpdateUserDTO,
 } from './dto/user.dto';
 import { Profile } from './models/profile.model';
@@ -44,10 +45,10 @@ export class UsersController {
   @Patch('update-user/:id')
   async updateUserController(
     @Body() updateDTO: UpdateUserDTO,
-    @Param('id') id: string,
+    @Param() param: IdParam,
   ): Promise<Profile> {
     const updatedUser = await this.userService.updateUserService({
-      id,
+      id: param.id,
       updateDTO,
     });
     return updatedUser;
@@ -93,7 +94,7 @@ export class UsersController {
   })
   @HttpCode(204)
   @Delete('delete-user/:id')
-  async deleteUserController(@Param('id') id: string) {
-    await this.userService.deleteUserService(id);
+  async deleteUserController(@Param() param: IdParam) {
+    await this.userService.deleteUserService(param.id);
   }
 }

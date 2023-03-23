@@ -5,6 +5,7 @@ import {
   IsString,
   IsEnum,
   IsOptional,
+  Matches,
 } from 'class-validator';
 
 import { UserState, UserRole } from '../types/user.types';
@@ -109,4 +110,11 @@ export class GetByRoleQueryDTO {
   @IsEnum(UserRole)
   @IsNotEmpty()
   role: UserRole;
+}
+
+export class IdParam {
+  @IsString()
+  @Matches(/^[0-9]+$/, { message: 'id must contain only digits' })
+  @IsNotEmpty()
+  id: string;
 }
