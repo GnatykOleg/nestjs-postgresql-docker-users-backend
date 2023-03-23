@@ -1,7 +1,7 @@
 import { errorMessages } from '../../common/constants/error-messages';
 import {
-  BadRequestException,
   ConflictException,
+  HttpException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -68,7 +68,7 @@ export class UsersService {
       // Return addition info after update
       return createdUser;
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new HttpException(error, error.status);
     }
   }
   // Update User
@@ -96,7 +96,7 @@ export class UsersService {
       // Return addition info after update
       return await this.findUserById(Number(id));
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new HttpException(error, error.status || 400);
     }
   }
 
@@ -111,7 +111,7 @@ export class UsersService {
       });
       return usersToFind;
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new Error(error);
     }
   }
 
@@ -128,7 +128,7 @@ export class UsersService {
 
       return usersByRole;
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new HttpException(error, error.status);
     }
   }
 
@@ -141,7 +141,7 @@ export class UsersService {
         throw new NotFoundException(errorMessages.USER_EXIST_ID);
       await this.profilesRepository.destroy({ where: { id } });
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new HttpException(error, error.status);
     }
   }
 }
